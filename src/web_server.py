@@ -5,39 +5,62 @@ from urllib.parse import parse_qs, urlparse
 class WebStore(BaseHTTPRequestHandler):
     """Класс, который отвечает за работу сервиса интернет магазина и обработку входящих запросов от клиентов"""
 
-    def __index_page(self) -> None:
-        """Метод выводит главную страницу веб приложения"""
-        pass
+    __index_page: str = "src/index_page.html" # Главная страница
+    __catalog_page: str = "src/catalog_page.html" # Страница с каталогом товаров
+    __category1_page: str = "src/category1_page.html" # Страница с товарами которые входят в первую категорию
+    __orders_page: str = "src/category1_page.html" # Страница с заказами
+    __contacts_page: str = "src/contacts_page.html" # Страница с контактами
 
-    def __catalog_page(self) -> None:
-        """Метод выводит страницу с каталогом товаров"""
-        pass
+    def __index(self, path) -> str:
+        """Метод для вывода страниц веб приложения"""
+        with open(path, 'r', encoding='utf-8') as index:
+            result = index.read()
+        return f"""{result}"""
 
-    def __category1_page(self) -> None:
-        """Метод выводит страницу с товаров которые входят в первую категорию"""
-        pass
+    # def __catalog_page(self) -> str:
+    #     """Метод выводит страницу с каталогом товаров"""
+    #     with open("src/catalog_page.html", 'r', encoding='utf-8') as index:
+    #         result = index.read()
+    #     return f"""{result}"""
+    #
+    # def __category1_page(self) -> str:
+    #     """Метод выводит страницу с товаров которые входят в первую категорию"""
+    #     with open("src/category1_page.html", 'r', encoding='utf-8') as index:
+    #         result = index.read()
+    #     return f"""{result}"""
+    #
+    # def __orders_page(self) -> str:
+    #     """Метод выводит страницу с заказами"""
+    #     with open("src/orders_page.html", 'r', encoding='utf-8') as index:
+    #         result = index.read()
+    #     return f"""{result}"""
+    #
+    # def __contacts_page(self) -> str:
+    #     """Метод выводит страницу с контактами"""
+    #     with open("src/contacts_page.html", 'r', encoding='utf-8') as index:
+    #         result = index.read()
+    #     return f"""{result}"""
 
-    def __orders_page(self) -> None:
-        """Метод выводит страницу с заказами"""
-        pass
-
-    def __contacts_page(self) -> None:
-        """Метод выводит страницу с контактами"""
-        pass
-
-    def _do_GET(self) -> None:
+    def do_GET(self) -> None:
         """ Метод для обработки входящих GET-запросов """
         query_components = parse_qs(urlparse(self.path).query)
         page_address = query_components.get('page')
-        page_content = self.__index_page()
+        page_content = self.__index(self.__index_page)
         if page_address:
-            page_content = self.__get_blog_article(page_address[0])
+            if page_address[0] == "catalog_page":
+                page_content = self.__index(self.__catalog_page)
+            elif page_address[0] == "orders_page":
+                page_content = self.__index(self.__orders_page)
+            elif page_address[0] == "contacts_page":
+                page_content = self.__index(self.__contacts_page)
+            elif page_address[0] == "category1_page":
+                page_content = self.__index(self.__category1_page)
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
         self.wfile.write(bytes(page_content, "utf-8"))
 
-    def _do_POST(self) -> None:
+    def do_POST(self) -> None:
         """Метод для обработки входящего POST-запроса"""
         content_length = int(self.headers["Content-Length"])
         body = self.rfile.read(content_length)

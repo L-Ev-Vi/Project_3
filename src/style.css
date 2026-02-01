@@ -1,0 +1,42 @@
+.leftside {
+            height: 100%;
+            width: 100%;
+            background: #212529;
+            color: white;
+            }
+
+.right {
+            height: 100vh;
+            width: 100%;
+            background: white;
+            color: blak;
+            overflow-y: scroll;
+            }
+
+.text-l {
+            text-align: left;
+            background: #212529;
+            width: 100%;
+            }
+
+.fix_position {
+            position: fixed;
+            left: 7px;
+            right: 84%;
+            bottom: 0;
+            z-index: 10;
+            }
+
+.fix_position_top {
+            position: fixed;
+            left: 7px;
+            right: 84%;
+            }
+
+.fix_position_dno {
+            position: fixed;
+            left: 15%;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
+            }
