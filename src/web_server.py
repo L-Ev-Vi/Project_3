@@ -5,41 +5,17 @@ from urllib.parse import parse_qs, urlparse
 class WebStore(BaseHTTPRequestHandler):
     """Класс, который отвечает за работу сервиса интернет магазина и обработку входящих запросов от клиентов"""
 
-    __index_page: str = "src/index_page.html" # Главная страница
-    __catalog_page: str = "src/catalog_page.html" # Страница с каталогом товаров
-    __category1_page: str = "src/category1_page.html" # Страница с товарами которые входят в первую категорию
-    __orders_page: str = "src/category1_page.html" # Страница с заказами
-    __contacts_page: str = "src/contacts_page.html" # Страница с контактами
+    __index_page: str = "src/index_page.html"  # Главная страница
+    __catalog_page: str = "src/catalog_page.html"  # Страница с каталогом товаров
+    __category1_page: str = "src/category1_page.html"  # Страница с товарами которые входят в первую категорию
+    __orders_page: str = "src/orders_page.html"  # Страница с заказами
+    __contacts_page: str = "src/contacts_page.html"  # Страница с контактами
 
     def __index(self, path) -> str:
-        """Метод для вывода страниц веб приложения"""
+        """Метод для вывода страниц веб приложения в браузере."""
         with open(path, 'r', encoding='utf-8') as index:
             result = index.read()
         return f"""{result}"""
-
-    # def __catalog_page(self) -> str:
-    #     """Метод выводит страницу с каталогом товаров"""
-    #     with open("src/catalog_page.html", 'r', encoding='utf-8') as index:
-    #         result = index.read()
-    #     return f"""{result}"""
-    #
-    # def __category1_page(self) -> str:
-    #     """Метод выводит страницу с товаров которые входят в первую категорию"""
-    #     with open("src/category1_page.html", 'r', encoding='utf-8') as index:
-    #         result = index.read()
-    #     return f"""{result}"""
-    #
-    # def __orders_page(self) -> str:
-    #     """Метод выводит страницу с заказами"""
-    #     with open("src/orders_page.html", 'r', encoding='utf-8') as index:
-    #         result = index.read()
-    #     return f"""{result}"""
-    #
-    # def __contacts_page(self) -> str:
-    #     """Метод выводит страницу с контактами"""
-    #     with open("src/contacts_page.html", 'r', encoding='utf-8') as index:
-    #         result = index.read()
-    #     return f"""{result}"""
 
     def do_GET(self) -> None:
         """ Метод для обработки входящих GET-запросов """
