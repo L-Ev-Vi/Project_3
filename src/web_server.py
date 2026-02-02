@@ -11,16 +11,16 @@ class WebStore(BaseHTTPRequestHandler):
     __orders_page: str = "src/orders_page.html"  # Страница с заказами
     __contacts_page: str = "src/contacts_page.html"  # Страница с контактами
 
-    def __index(self, path) -> str:
+    def __index(self, path: str) -> str:
         """Метод для вывода страниц веб приложения в браузере."""
-        with open(path, 'r', encoding='utf-8') as index:
+        with open(path, "r", encoding="utf-8") as index:
             result = index.read()
         return f"""{result}"""
 
     def do_GET(self) -> None:
-        """ Метод для обработки входящих GET-запросов """
+        """Метод для обработки входящих GET-запросов"""
         query_components = parse_qs(urlparse(self.path).query)
-        page_address = query_components.get('page')
+        page_address = query_components.get("page")
         page_content = self.__index(self.__index_page)
         if page_address:
             if page_address[0] == "catalog_page":
